@@ -7,7 +7,7 @@ npm install node-svnsync
 ```
 ###Simple Usage
 ```javascript
-var svnsync = require('./index');
+var svnsync = require('node-svnsync');
 
 svnsync({
   'dest': './out',
