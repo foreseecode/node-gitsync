@@ -1,6 +1,6 @@
 {
   "name": "node-svnsync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node helper library for keeping a remove subversion library syncronized with a local folder.",
   "main": "index.js",
   "scripts": {

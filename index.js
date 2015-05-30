@@ -35,7 +35,8 @@ var SVNSync = function (obj, cb) {
    * @param password
    */
   function runsync(username, password) {
-    if (fs.existsSync(obj.dest + obj.localfolder)) {
+    var fullqualifiedplace = obj.dest + '/' + obj.localfolder;
+    if (fs.existsSync(fullqualifiedplace)) {
       // Exit.. we already have the tag
       cb();
     } else {
@@ -66,12 +67,17 @@ var SVNSync = function (obj, cb) {
 
     }
   }
-
-  if (!obj.username || !obj.password) {
-    // Get the credentials from the user
-    getcreds(obj.repo, runsync)
+  var fullqualifiedplace = obj.dest + '/' + obj.localfolder;
+  if (fs.existsSync(fullqualifiedplace)) {
+    // Exit.. we already have the tag
+    cb();
   } else {
-    runsync(obj.username, obj.password);
+    if (!obj.username || !obj.password) {
+      // Get the credentials from the user
+      getcreds(obj.repo, runsync)
+    } else {
+      runsync(obj.username, obj.password);
+    }
   }
 
 };
