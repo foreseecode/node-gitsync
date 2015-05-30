@@ -1,0 +1,33 @@
+{
+  "name": "node-svnsync",
+  "version": "0.1.0",
+  "description": "Node helper library for keeping a remove subversion library syncronized with a local folder.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexsaves/acs-apiclient.git"
+  },
+  "keywords": [
+    "SVN",
+    "subversion",
+    "synchronize",
+    "Node"
+  ],
+  "author": "Alexei White",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexsaves/node-svnsync/issues"
+  },
+  "homepage": "https://github.com/alexsaves/node-svnsync",
+  "dependencies": {
+    "async": "^1.0.0",
+    "easy-spawn": "0.0.2",
+    "prompt": "^0.2.14",
+    "rimraf": "^2.3.4",
+    "xml2js": "^0.4.9"
+  },
+  "engine": "node >= 0.10.30"
+}
