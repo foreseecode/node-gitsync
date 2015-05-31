@@ -29,27 +29,34 @@ var SVNSync = function (obj, cb) {
       console.log("SVN Sync finished.");
     };
 
+  // Decide where this goes
+  var fullqualifiedplace = obj.dest + '/' + obj.localfolder,
+    semiqualified = obj.dest + '/' + obj.localfolder;
+
+  if (obj.localfolder.indexOf('/') > -1) {
+    semiqualified = obj.dest + '/' + obj.localfolder.substr(0, obj.localfolder.lastIndexOf('/'));
+  }
+
   /**
    * Runs the actual sync
    * @param username
    * @param password
    */
   function runsync(username, password) {
-    var fullqualifiedplace = obj.dest + '/' + obj.localfolder;
     if (fs.existsSync(fullqualifiedplace)) {
       // Exit.. we already have the tag
       cb();
     } else {
       // Make the tag folder if it doesn't exist
-      if (!fs.existsSync(obj.dest)) {
-        fs.mkdir(obj.dest);
+      if (!fs.existsSync(fullqualifiedplace)) {
+        fs.mkdir(fullqualifiedplace);
       }
       var ctx = this;
 
       console.info("Wait a moment, pulling repo " + obj.repo + "...");
 
       var client = new svnclient({
-        cwd: obj.dest,
+        cwd: semiqualified,
         username: username,
         password: password
       });
@@ -67,7 +74,8 @@ var SVNSync = function (obj, cb) {
 
     }
   }
-  var fullqualifiedplace = obj.dest + '/' + obj.localfolder;
+
+  // Check to see if we already have it
   if (fs.existsSync(fullqualifiedplace)) {
     // Exit.. we already have the tag
     cb();
