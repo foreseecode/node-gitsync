@@ -2,14 +2,23 @@
  * Dependencies
  */
 var svnclient = require('./svn'),
-  getcreds = require('./getcreds'),
-  fs = require('fs'),
-  rimraf = require('rimraf');
+    gitclient = require('./git')
+    getcreds  = require('./getcreds'),
+    fs        = require('fs'),
+    rimraf    = require('rimraf');
 
 /**
  * Synchronizes a remove svn repo
  * @constructor
  */
+
+var obj = {
+  dest: __dirname,
+  localfolder: 'subrepo',
+  repo: 'https://github.com/SHEFFcode/mainrepo.git',
+
+}
+
 var SVNSync = function (obj, cb) {
 
   if (!obj.dest) {
@@ -26,12 +35,12 @@ var SVNSync = function (obj, cb) {
 
   // Make sure there is a callback
   cb = cb || function () {
-      console.log("SVN Sync finished.");
+      console.log("Git Sync finished.");
     };
 
   // Decide where this goes
-  var fullqualifiedplace = obj.dest + '/' + obj.localfolder,
-    semiqualified = obj.dest + '/' + obj.localfolder;
+  var fullqualifiedplace  = obj.dest + '/' + obj.localfolder,
+      semiqualified       = obj.dest + '/' + obj.localfolder;
 
   if (obj.localfolder.indexOf('/') > -1) {
     semiqualified = obj.dest + '/' + obj.localfolder.substr(0, obj.localfolder.lastIndexOf('/'));
@@ -42,10 +51,10 @@ var SVNSync = function (obj, cb) {
    * @param username
    * @param password
    */
-  function runsync(username, password) {
+  function runsync() {
+    var client = new gitclient();
     if (fs.existsSync(fullqualifiedplace)) {
-      // Exit.. we already have the tag
-      cb();
+      console.log('folder already exists, exiting');
     } else {
       // Make the tag folder if it doesn't exist
       if (!fs.existsSync(fullqualifiedplace)) {
@@ -55,37 +64,15 @@ var SVNSync = function (obj, cb) {
 
       console.info("Wait a moment, pulling repo " + obj.repo + "...");
 
-      var client = new svnclient({
-        cwd: semiqualified,
-        username: username,
-        password: password
-      });
-      client.checkout([obj.repo, '--quiet', '--non-interactive'], function (err, data) {
-
-        if (err) {
-          rimraf(obj.dest + '/' + obj.localfolder, function () {
-            console.info('Could not connect to repository. Check your credentials and VPN settings.');
-            cb(err);
-          });
-        } else {
-          cb();
-        }
-      });
-
+      client.clone(obj.repo, obj.localfolder);
     }
   }
 
   // Check to see if we already have it
   if (fs.existsSync(fullqualifiedplace)) {
-    // Exit.. we already have the tag
-    cb();
+    console.log('folder already exists, exiting');
   } else {
-    if (!obj.username || !obj.password) {
-      // Get the credentials from the user
-      getcreds(obj.repo, runsync)
-    } else {
-      runsync(obj.username, obj.password);
-    }
+    runsync();
   }
 
 };
@@ -94,4 +81,7 @@ var SVNSync = function (obj, cb) {
  * Expose the class to the world
  * @type {Function}
  */
+
+SVNSync(obj);
+
 module.exports = SVNSync;

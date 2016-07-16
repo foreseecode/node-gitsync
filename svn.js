@@ -1,10 +1,10 @@
 'use strict';
 
-var Spawn = require('easy-spawn'),
-  util = require('util'),
-  xml2js = require('xml2js'),
-  async = require('async'),
-  fs = require('fs');
+var Spawn   = require('easy-spawn'),
+    util    = require('util'),
+    xml2js  = require('xml2js'),
+    async   = require('async'),
+    fs      = require('fs');
 
 /**
  * The main client class
