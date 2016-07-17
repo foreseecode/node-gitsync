@@ -1,6 +1,6 @@
-Node SVNSync
+Node GitSync
 ===================
-Helper library for syncronizing a remote subversion repository with a local folder, being sure to only pull it down when it does not exist locally.
+Helper library for syncronizing a remote git repository with a local folder, being sure to only pull it down when it does not exist locally.
 ###Installation &nbsp;  [![npm version](https://badge.fury.io/js/node-svnsync.svg)](http://badge.fury.io/js/node-svnsync)
 ```sh
 npm install node-svnsync

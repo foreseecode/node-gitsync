@@ -12,13 +12,6 @@ var svnclient = require('./svn'),
  * @constructor
  */
 
-var obj = {
-  dest: __dirname,
-  localfolder: 'subrepo',
-  repo: 'https://github.com/SHEFFcode/mainrepo.git',
-
-}
-
 var SVNSync = function (obj, cb) {
 
   if (!obj.dest) {
@@ -81,7 +74,5 @@ var SVNSync = function (obj, cb) {
  * Expose the class to the world
  * @type {Function}
  */
-
-SVNSync(obj);
 
 module.exports = SVNSync;
