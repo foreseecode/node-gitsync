@@ -8,11 +8,17 @@ var Git     = require('simple-git')(__dirname),
 
 var Client = function () { };
 
-Client.prototype.clone = function (repoURL, folderName, cb) {
+Client.prototype.clone = function (repoURL, folderName, branch, cb) {
   var cb = cb || function () {
     console.log('repo cloned');
   }
-  Git.clone(repoURL, folderName, cb)
+  if (folderName) {
+    folderName += '/' + branch;
+  }
+  if (branch) {
+    var optionsArr = ['-b' + branch];
+  }
+  Git.clone(repoURL, folderName, optionsArr, cb)
 };
 
 Client.prototype.pull = function (repoURL, branch, cb) {

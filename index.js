@@ -57,7 +57,7 @@ var SVNSync = function (obj, cb) {
 
       console.info("Wait a moment, pulling repo " + obj.repo + "...");
 
-      client.clone(obj.repo, obj.localfolder);
+      client.clone(obj.repo, obj.localfolder, obj.branch);
     }
   }
 
