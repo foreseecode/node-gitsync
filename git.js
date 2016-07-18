@@ -1,6 +1,6 @@
 'use strict';
 
-var Git     = require('simple-git')(__dirname),
+var Git     = require('simple-git')(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + '/gateway/tags'),
     util    = require('util'),
     xml2js  = require('xml2js'),
     async   = require('async'),
@@ -8,17 +8,15 @@ var Git     = require('simple-git')(__dirname),
 
 var Client = function () { };
 
-Client.prototype.clone = function (repoURL, folderName, branch, cb) {
+Client.prototype.clone = function (repoURL, folderName, cb) {
   var cb = cb || function () {
     console.log('repo cloned');
   }
   if (folderName) {
-    folderName += '/' + branch;
+    var optionsArr = ['-b' + folderName];
   }
-  if (branch) {
-    var optionsArr = ['-b' + branch];
-  }
-  Git.clone(repoURL, folderName, optionsArr, cb)
+  console.log(folderName)
+  Git.clone(repoURL, 'folderName', optionsArr, cb);
 };
 
 Client.prototype.pull = function (repoURL, branch, cb) {
