@@ -1,12 +1,12 @@
 'use strict';
 
-var Git     = require('simple-git')(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + '/gateway/tags'),
+var Git     = require('simple-git')(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags'),
     util    = require('util'),
     xml2js  = require('xml2js'),
     async   = require('async'),
     fs      = require('fs');
 
-var Client = function () { };
+var Client = function () { console.log(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags') };
 
 Client.prototype.clone = function (repoURL, folderName, cb) {
   var cb = cb || function () {
@@ -16,7 +16,7 @@ Client.prototype.clone = function (repoURL, folderName, cb) {
     var optionsArr = ['-b' + folderName];
   }
   console.log(folderName)
-  Git.clone(repoURL, 'folderName', optionsArr, cb);
+  Git.clone(repoURL, folderName, optionsArr, cb);
 };
 
 Client.prototype.pull = function (repoURL, branch, cb) {

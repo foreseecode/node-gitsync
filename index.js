@@ -1,8 +1,7 @@
 /**
  * Dependencies
  */
-var svnclient = require('./svn'),
-    gitclient = require('./git')
+var gitclient = require('./git')
     getcreds  = require('./getcreds'),
     fs        = require('fs'),
     rimraf    = require('rimraf');
@@ -32,7 +31,7 @@ var SVNSync = function (obj, cb) {
     };
 
   // Decide where this goes
-  var fullqualifiedplace  = obj.dest,
+  var fullqualifiedplace  = obj.dest + '/' + obj.branch,
       semiqualified       = obj.dest;
 
   if (obj.localfolder.indexOf('/') > -1) {
