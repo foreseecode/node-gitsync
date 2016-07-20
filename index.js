@@ -6,12 +6,19 @@ var gitclient = require('./git')
     fs        = require('fs'),
     rimraf    = require('rimraf');
 
+
+
 /**
  * Synchronizes a remove svn repo
  * @constructor
  */
 
 var SVNSync = function (obj, cb) {
+
+  var loc = obj.loc,
+  Git     = require('simple-git');//(loc);
+
+  //gitclient = gitclient(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags');
 
   if (!obj.dest) {
     throw new Error("Destination (dest) folder is required.");
@@ -32,7 +39,8 @@ var SVNSync = function (obj, cb) {
 
   // Decide where this goes
   var fullqualifiedplace  = obj.dest + '/' + obj.branch,
-      semiqualified       = obj.dest;
+    semiqualified       = obj.dest;
+  console.log("line 37:" + fullqualifiedplace);
 
   if (obj.localfolder.indexOf('/') > -1) {
     semiqualified = obj.dest + '/' + obj.localfolder.substr(0, obj.localfolder.lastIndexOf('/'));
@@ -44,9 +52,13 @@ var SVNSync = function (obj, cb) {
    * @param password
    */
   function runsync() {
-    var client = new gitclient();
+    console.log("line 50; runsync, location: " + __dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + obj.dest.split('./')[1]);
+
+    var client = new gitclient(loc);//(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")));
+    //var client = new gitclient()(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + obj.dest);
+
     if (fs.existsSync(fullqualifiedplace)) {
-      console.log('folder already exists, exiting');
+      console.log('line 50, folder already exists, exiting');
     } else {
       // Make the tag folder if it doesn't exist
       if (!fs.existsSync(fullqualifiedplace)) {
@@ -56,13 +68,22 @@ var SVNSync = function (obj, cb) {
 
       console.info("Wait a moment, pulling repo " + obj.repo + "...");
 
-      client.clone(obj.repo, obj.branch);
+      client.clone(obj.repo, obj.branch, obj.dest.split('./')[1], function (err, data) {
+        console.log("obj.repo: " + obj.repo + "\nobj.branch: " + obj.branch + "\nobj.dest: " + obj.dest);
+        if (err) {
+          //TODO: delete folder
+        }
+        else {
+          cb();
+        }
+      });
     }
   }
 
   // Check to see if we already have it
   if (fs.existsSync(fullqualifiedplace)) {
-    console.log('folder already exists, exiting');
+    console.log("folder is:" + fullqualifiedplace);
+    console.log('line 66, folder already exists, exiting');
   } else {
     runsync();
   }

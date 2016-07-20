@@ -1,22 +1,27 @@
 'use strict';
 
-var Git     = require('simple-git')(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags'),
-    util    = require('util'),
+//var //Git     = require('simple-git')(loc),//(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules"))),// + 'extern/gateway/tags'),
+
+var Client = function (loc) {
+  this.Git = require('simple-git')(loc);// + 'extern/gateway/tags'),
+    var util    = require('util'),
     xml2js  = require('xml2js'),
     async   = require('async'),
     fs      = require('fs');
 
-var Client = function () { console.log(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags') };
+  //console.log("directory name is: " + __dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags')
 
-Client.prototype.clone = function (repoURL, folderName, cb) {
+};
+
+Client.prototype.clone = function (repoURL, folderName, folderStructure, cb) {
   var cb = cb || function () {
     console.log('repo cloned');
   }
   if (folderName) {
     var optionsArr = ['-b' + folderName];
   }
-  console.log(folderName)
-  Git.clone(repoURL, folderName, optionsArr, cb);
+  console.log("line 22, folder name is: " + folderName)
+  this.Git.clone(repoURL, folderName, optionsArr, cb);
 };
 
 Client.prototype.pull = function (repoURL, branch, cb) {
