@@ -18,6 +18,8 @@ var SVNSync = function (obj, cb) {
   var loc = obj.loc,
   Git     = require('simple-git');//(loc);
 
+  console.log('folder locations is ' + loc + obj.branch);
+
   //gitclient = gitclient(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags');
 
   if (!obj.dest) {
@@ -73,6 +75,7 @@ var SVNSync = function (obj, cb) {
         console.log("obj.repo: " + obj.repo + "\nobj.branch: " + obj.branch + "\nobj.dest: " + obj.dest);
         if (err) {
           //TODO: delete folder
+          rimraf(loc + obj.branch)
         }
         else {
           cb();
