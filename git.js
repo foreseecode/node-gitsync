@@ -1,69 +1,73 @@
 'use strict';
-
-//var //Git     = require('simple-git')(loc),//(__dirname.toString().substring(0, __dirname.toString().indexOf("node_modules"))),// + 'extern/gateway/tags'),
-
+/**
+ * The main client class
+ * @param loc
+ * @constructor
+ */
 var Client = function (loc) {
-  this.Git = require('simple-git')(loc);// + 'extern/gateway/tags'),
-    var util    = require('util'),
-    xml2js  = require('xml2js'),
-    async   = require('async'),
-    fs      = require('fs');
-
-  //console.log("directory name is: " + __dirname.toString().substring(0, __dirname.toString().indexOf("node_modules")) + 'extern/gateway/tags')
-
+  this.Git = require('simple-git')(loc);
 };
 
-Client.prototype.clone = function (repoURL, folderName, folderStructure, cb) {
+/*
+ Git commands
+ */
+Client.prototype.clone = function (repoURL, branch, cb) {
+  //Make sure there is a callback
   var cb = cb || function () {
     console.log('repo cloned');
   }
-  if (folderName) {
-    var optionsArr = ['-b' + folderName];
+  //if branch is specified set options arr.
+  if (branch) {
+    var optionsArr = ['-b' + branch];
+  } else {
+   console.log('Please specify a branch.');
+   return;
   }
-  console.log("line 22, folder name is: " + folderName)
-  this.Git.clone(repoURL, folderName, optionsArr, cb);
+  console.log("Starting to cloen branch " + branch)
+  this.Git.clone(repoURL, branch, optionsArr, cb);
+  console.log('Branch ' + branch + ' successfully cloned');
 };
 
 Client.prototype.pull = function (repoURL, branch, cb) {
-  Git.pull(repoURL, folderName, cb)
+  this.Git.pull(repoURL, branch, cb)
 };
 
 Client.prototype.addTag = function (tagName, cb) {
-  tagName ? Git.addTag(tagName, cb) : console.log('Please input a tag name');
+  tagName ? this.Git.addTag(tagName, cb) : console.log('Please input a tag name');
 };
 
 Client.prototype.checkoutLocalBranch = function (branchName, cb) {
-  branchName ? Git.checkoutLocalBranch(branchName, cb) : console.log('Please input a branch name');
+  branchName ? this.Git.checkoutLocalBranch(branchName, cb) : console.log('Please input a branch name');
 };
 
 Client.prototype.checkoutLatestTag = function (cb) {
-  Git.checkoutLatestTag(cb);
+  this.Git.checkoutLatestTag(cb);
 }
 
 Client.prototype.add = function (param) {
   //TODO: loop through the arguments and see if they are a function, if they are not a function push them into a single array and pass to fn.
   var param = param || './*';
-  Git.add(param);
+  this.Git.add(param);
 }
 
 Client.prototype.commit = function (message) {
-  Git.commit(message);
+  this.Git.commit(message);
 }
 
 Client.prototype.push = function (remote, branch, cb) {
-  Git.push(remote, branch, cb)
+  this.Git.push(remote, branch, cb)
 }
 
 Client.prototype.pushTags = function (remote, cb) {
-  Git.pushTags(remote, cb);
+  this.Git.pushTags(remote, cb);
 }
 
 Client.prototype.rm = function (file, cb) {
-  Git.rm(file, cb);
+  this.Git.rm(file, cb);
 }
 
 Client.prototype.status = function () {
-  Git.status();
+  this.Git.status();
 }
 
 module.exports = Client;
