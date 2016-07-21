@@ -40,13 +40,9 @@ var SVNSync = function (obj, cb) {
     };
 
   // Decide where this goes
-  var fullqualifiedplace  = obj.dest + '/' + obj.branch,
-    semiqualified       = obj.dest;
+  var fullqualifiedplace  = obj.dest + '/' + obj.branch;
+  
   console.log("line 37:" + fullqualifiedplace);
-
-  if (obj.localfolder.indexOf('/') > -1) {
-    semiqualified = obj.dest + '/' + obj.localfolder.substr(0, obj.localfolder.lastIndexOf('/'));
-  }
 
   /**
    * Runs the actual sync
