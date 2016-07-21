@@ -59,6 +59,7 @@ var SVNSync = function (obj, cb) {
 
     if (fs.existsSync(fullqualifiedplace)) {
       console.log('line 50, folder already exists, exiting');
+      cb();
     } else {
       // Make the tag folder if it doesn't exist
       if (!fs.existsSync(fullqualifiedplace)) {
@@ -84,6 +85,7 @@ var SVNSync = function (obj, cb) {
   if (fs.existsSync(fullqualifiedplace)) {
     console.log("folder is:" + fullqualifiedplace);
     console.log('line 66, folder already exists, exiting');
+    cb();
   } else {
     runsync();
   }
