@@ -1,5 +1,5 @@
 {
-  "name": "node-svnsync",
+  "name": "node-gitsync",
   "version": "0.1.2",
   "description": "Node helper library for keeping a remove subversion library syncronized with a local folder.",
   "main": "index.js",
