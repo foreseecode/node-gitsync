@@ -80,4 +80,4 @@ var GITSync = function (obj, cb) {
  * @type {Function}
  */
 
-module.exports = SVNSync;
+module.exports = GITSync;
