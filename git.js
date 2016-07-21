@@ -5,6 +5,7 @@
  * @constructor
  */
 var Client = function (loc) {
+  console.log('locations is ' + loc);
   this.Git = require('simple-git')(loc);
 };
 
@@ -23,9 +24,8 @@ Client.prototype.clone = function (repoURL, branch, cb) {
    console.log('Please specify a branch.');
    return;
   }
-  console.log("Starting to cloen branch " + branch)
+  console.log("Starting to clone branch " + branch)
   this.Git.clone(repoURL, branch, optionsArr, cb);
-  console.log('Branch ' + branch + ' successfully cloned');
 };
 
 Client.prototype.pull = function (repoURL, branch, cb) {
