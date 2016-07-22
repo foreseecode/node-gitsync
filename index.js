@@ -12,7 +12,7 @@ var gitclient = require('./git'),
 
 var GITSync = function (obj, cb) {
 
-  var loc = obj.loc,
+  var loc = obj.dest,
       Git = require('simple-git');
 
   if (!obj.dest) {
@@ -53,12 +53,11 @@ var GITSync = function (obj, cb) {
 
       console.info("Wait a moment, pulling repo " + obj.repo + "...");
 
-      client.clone(obj.repo, obj.branch, obj.dest.split('./')[1], function (err, data) {
+      client.clone(obj.repo, obj.branch, function (err, data) {
         if (err) {
-          //TODO: delete folder
-          rimraf(loc + obj.branch)
-        }
-        else {
+          rimraf(loc + obj.branch);
+          cb(err);
+        } else {
           cb();
         }
       });
