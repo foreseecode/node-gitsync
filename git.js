@@ -5,7 +5,6 @@
  * @constructor
  */
 var Client = function (loc) {
-  console.log('locations is ' + loc);
   this.Git = require('simple-git')(loc);
 };
 
