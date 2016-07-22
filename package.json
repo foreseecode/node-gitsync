@@ -1,7 +1,7 @@
 {
   "name": "node-gitsync",
   "version": "1.0.1",
-  "description": "Node helper library for keeping a remove git library syncronized with a local folder.",
+  "description": "Node helper library for keeping a remote git library syncronized with a local folder.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
