@@ -1,6 +1,6 @@
 {
   "name": "node-gitsync",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node helper library for keeping a remove git library syncronized with a local folder.",
   "main": "index.js",
   "scripts": {
