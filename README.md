@@ -11,7 +11,7 @@ var gitsync = require('node-gitsync');
 
 gitsync({
   'dest': 'relative-path-to-subfolder',
-  'repo': 'https://svn.bla.com/technology/GATEWAY_JS/tags/1.1.9',
+  'repo': 'https://github.com/blah/repo.git',
   'branch': 'name-of-desired-branch'
 }, function(err) {
   console.log("done!");
