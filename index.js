@@ -43,7 +43,7 @@ var GITSync = function (obj, cb) {
     var client = new gitclient(loc);
 
     if (fs.existsSync(fullqualifiedplace)) {
-      console.log('line 50, folder already exists, exiting');
+      console.log('Folder already exists, exiting.');
       cb();
     } else {
       // Make the tag folder if it doesn't exist
@@ -66,7 +66,7 @@ var GITSync = function (obj, cb) {
 
   // Check to see if we already have it
   if (fs.existsSync(fullqualifiedplace)) {
-    console.log('line 66, folder already exists, exiting');
+    console.log('Folder already exists, exiting.');
     cb();
   } else {
     runsync();
