@@ -4,3 +4,4 @@ node_modules/
 .idea/node-svnsync.iml
 .idea/workspace.xml
 .idea/
+/yarn.lock

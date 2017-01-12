@@ -2,8 +2,8 @@
  * Dependencies
  */
 var gitclient = require('./git'),
-    fs        = require('fs'),
-    rimraf    = require('rimraf');
+  fs = require('fs'),
+  rimraf = require('rimraf');
 
 /**
  * Synchronizes a remove svn repo
@@ -13,7 +13,7 @@ var gitclient = require('./git'),
 var GITSync = function (obj, cb) {
 
   var loc = obj.dest,
-      Git = require('simple-git');
+    Git = require('simple-git');
 
   if (!obj.dest) {
     throw new Error("Destination (dest) folder is required.");
@@ -33,7 +33,7 @@ var GITSync = function (obj, cb) {
     };
 
   // Decide where this goes
-  var fullqualifiedplace  = obj.dest + '/' + obj.branch;
+  var fullqualifiedplace = obj.dest + '/' + obj.branch;
 
   /**
    * Runs the actual sync
@@ -43,13 +43,11 @@ var GITSync = function (obj, cb) {
     var client = new gitclient(loc);
 
     if (fs.existsSync(fullqualifiedplace)) {
-      console.log('Folder already exists, exiting.');
+      console.log('Folder (' + fullqualifiedplace + ') already exists, exiting.');
       cb();
     } else {
       // Make the tag folder if it doesn't exist
-      if (!fs.existsSync(fullqualifiedplace)) {
-        fs.mkdir(fullqualifiedplace);
-      }
+      fs.mkdir(fullqualifiedplace);
 
       console.info("Wait a moment, pulling repo " + obj.repo + "...");
 
@@ -66,7 +64,7 @@ var GITSync = function (obj, cb) {
 
   // Check to see if we already have it
   if (fs.existsSync(fullqualifiedplace)) {
-    console.log('Folder already exists, exiting.');
+    console.log('Folder (' + fullqualifiedplace + ') already exists, exiting.');
     cb();
   } else {
     runsync();
