@@ -24,7 +24,7 @@
   "homepage": "https://github.com/SHEFFcode/node-gitsync",
   "dependencies": {
     "rimraf": "^2.3.4",
-    "simple-git": "^1.43.0"
+    "colors": "^1.1.2"
   },
   "engine": "node >= 0.10.30"
 }
