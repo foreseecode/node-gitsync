@@ -52,33 +52,42 @@ var GITSync = function (obj, cb) {
     };
 
   // Decide where this goes
-  var fullqualifiedplace = obj.dest + '/' + obj.branch;
+  var fullqualifiedplace = obj.dest + '/' + obj.branch,
+    needToSync = false;
+
+  fullqualifiedplace = fullqualifiedplace.replace(/\/\//g, '/');
 
   // Check if we need to make the parent folder
   if (!fs.existsSync(obj.dest)) {
     fs.mkdir(obj.dest);
+    needToSync = true;
+  }
+  if (!fs.existsSync(fullqualifiedplace)) {
+    fs.mkdir(fullqualifiedplace);
+    needToSync = true;
   }
 
   isDirEmpty(fullqualifiedplace, function (err, isempty) {
-    if (!fs.existsSync(fullqualifiedplace) || isempty) {
-      console.log("gitsync".yellow + ": ".grey + "Folder " + fullqualifiedplace + " doesn't exist. Creating it..");
-      // Make the tag folder if it doesn't exist
-      if (!isempty) {
-        fs.mkdir(fullqualifiedplace);
-      }
-
+    if (isempty || needToSync) {
       var client = new simpleGit(obj.dest);
+      console.info("gitsync".yellow + ": ".grey + "Wait a moment, pulling repo " + obj.repo.magenta + " branch " + obj.branch.magenta + " to " + fullqualifiedplace.magenta + "...");
 
-      console.info("gitsync".yellow + ": ".grey + "Wait a moment, pulling repo " + obj.repo + "...");
+      client.raw(
+        [
+          'clone',
+          '-b',
+          obj.branch,
+          obj.repo,
+          obj.branch
+        ], function(err, result) {
+          if (err) {
+            rimraf(fullqualifiedplace);
+            cb(err);
+          } else {
+            cb();
+          }
+        });
 
-      client.clone(obj.repo, obj.branch, function (err, data) {
-        if (err) {
-          rimraf(fullqualifiedplace);
-          cb(err);
-        } else {
-          cb();
-        }
-      });
     } else {
       cb();
     }
