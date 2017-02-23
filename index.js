@@ -81,8 +81,9 @@ var GITSync = function (obj, cb) {
           obj.branch
         ], function(err, result) {
           if (err) {
-            rimraf(fullqualifiedplace);
-            cb(err);
+            rimraf(fullqualifiedplace, function() {
+              cb(err);
+            });
           } else {
             cb();
           }
